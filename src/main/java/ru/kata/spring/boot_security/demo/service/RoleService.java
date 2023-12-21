@@ -21,5 +21,9 @@ public interface RoleService {
 
 
     void save(User user);
+
     void save(Role role);
+
+
+
 }

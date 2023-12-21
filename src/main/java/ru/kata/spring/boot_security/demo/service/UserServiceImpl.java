@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUser(Long id) {
-
         return userDao.getUser(id);
     }
 
@@ -75,9 +74,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        return userDao.loadUserByUsername(username);
-    }
-
+       return userDao.loadUserByUsername(username);
+   }
     @Override
     public void updateRole(String updateRoleForm) {
 
@@ -95,6 +93,34 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save (Role role) {
 
+    }
+
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
+    @Override
+    public void update(Long id, User user) {
+
+    }
+
+  // @Override
+   // public User getUser() {
+  //      return userDao.getUser(getUser().getId());
+  //  }
+
+
+
+    @Override
+    public void update(User user) {
+
+    }
+
+    @Override
+    public User findUsername(String username) {
+        return userDao.findUsername(username);
     }
 
 

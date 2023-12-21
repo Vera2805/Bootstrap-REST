@@ -20,8 +20,8 @@ public interface UserService extends UserDetailsService {
 
     void updateUser(User user);
 
-    User getUser(Long id);
 
+    User getUser(Long id);
 
     String getPassword(Long id);
 
@@ -34,7 +34,22 @@ public interface UserService extends UserDetailsService {
 
 
     void save(User user);
-    void save (Role role);
+
+    void save(Role role);
+
+
+    void deleteById(Long id);
+
+    void update(Long id, User user);
+
+
+    // User getUser();
+
+
+    void update(User user);
+
+    User findUsername(String username);
+
 
 }
 

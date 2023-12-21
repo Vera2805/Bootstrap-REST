@@ -18,6 +18,7 @@ public class UserDaoImpl implements UserDao {
     private EntityManager entityManager;
 
 
+
     @Override
     public void addUser(User user) {
         entityManager.persist(user);
@@ -76,6 +77,16 @@ public class UserDaoImpl implements UserDao {
 
     }
 
+    @Override
+    public User getUser()  {
+        return entityManager.find(User.class,getUser());
+
+    }
+
+    @Override
+    public User findUsername(String name) {
+        return entityManager.find(User.class,name);
+    }
 
 
 }

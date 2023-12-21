@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -126,10 +127,14 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
+   // public Set<Role> getRoles() {
+   //     return roles;
+   // }
+   public Set<String> getRoleNames() {
+       return roles.stream()
+               .map(Role::getName)
+               .collect(Collectors.toSet());
+   }
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
