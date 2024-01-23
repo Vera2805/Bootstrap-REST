@@ -1,15 +1,13 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Table(name = "roles")
@@ -18,15 +16,12 @@ public class Role implements GrantedAuthority {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
-
-
-    public Role() {
-    }
 
     public Role(String name) {
         this.name = name;
@@ -37,7 +32,7 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public void save() {
+    public Role() {
 
     }
 
@@ -69,6 +64,7 @@ public class Role implements GrantedAuthority {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
     @Override
     public String toString() {
         return name;

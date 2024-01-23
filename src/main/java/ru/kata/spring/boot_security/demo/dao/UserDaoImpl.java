@@ -1,15 +1,19 @@
 package ru.kata.spring.boot_security.demo.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -17,22 +21,13 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-
-
     @Override
     public void addUser(User user) {
         entityManager.persist(user);
     }
 
     @Override
-    public void deleteUser(Long id) {
-        User user = getUser(id);
-        entityManager.remove(user);
-    }
-
-    @Override
     public Set<User> getAllUsers() {
-
         return new HashSet<>(entityManager.createQuery("select u from User u", User.class)
                 .getResultList());
     }
@@ -53,43 +48,36 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        TypedQuery<User> typedQuery = entityManager.createQuery(
-                "select u from User u LEFT JOIN FETCH u.roles where u.username = '" + username + "'", User.class
-        );
-        User user = typedQuery.getSingleResult();
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
+    public User findByUsername(String username) {
+        TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+        query.setParameter("username", username);
+        List<User> resultList = query.getResultList();
+        if (resultList == null || resultList.isEmpty()) {
+            return null;
         }
-        return user;
-    }
-
-
-    @Override
-    public Role getRoleByName(String roleName) {
-        TypedQuery<Role> typedQuery = entityManager.createQuery(
-                "select r from Role r where r.name = '" + roleName + "'", Role.class);
-        return typedQuery.getSingleResult();
+        return resultList.get(0);
     }
 
     @Override
-    public void save(User user) {
-
+    public void deleteById(Long id) {
+        User user = getUser(id);
+        entityManager.remove(user);
     }
 
     @Override
-    public User getUser()  {
-        return entityManager.find(User.class,getUser());
-
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        String jpql = "SELECT u FROM User u WHERE u.username = :username";
+        User user = entityManager.createQuery(jpql, User.class)
+                .setParameter("username", username)
+                .getSingleResult();
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("User %s not found", username));
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getRoles());
     }
-
-    @Override
-    public User findUsername(String name) {
-        return entityManager.find(User.class,name);
-    }
-
-
 }
+
+
 
 
 

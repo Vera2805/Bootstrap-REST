@@ -26,17 +26,15 @@ public class Init {
         Role userRole = new Role("ROLE_USER");
         roleService.addRole(userRole);
         User user = new User("imya", "fam", "mail@mail.com", "q", "q");
-        user.setRoles(Collections.singleton(userRole));
-        userService.addUser(user);
+        userService.addUser(user, Set.of(userRole));
 
         Role adminRole = new Role("ROLE_ADMIN");
         roleService.addRole(adminRole);
         User admin = new User("im", "fami", "mail@mail.com", "admin", "admin");
-        admin.setRoles(Set.of(adminRole, userRole));
-        userService.addUser(admin);
+        userService.addUser(admin, Set.of(adminRole, userRole));
 
     }
 
 
-    }
+}
 

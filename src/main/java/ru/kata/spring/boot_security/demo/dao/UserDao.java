@@ -8,12 +8,8 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.Set;
 
 public interface UserDao {
-   //   User findByEmail(String email);
-
 
     void addUser(User user);
-
-    void deleteUser(Long id);
 
     Set<User> getAllUsers();
 
@@ -25,17 +21,11 @@ public interface UserDao {
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-    Role getRoleByName(String roleName);
+    User findByUsername(String username);
 
-    void save(User user);
+    void deleteById(Long id);
 
-
-    User getUser();
-
-
-    User findUsername(String username);
 }
-
 
 
 

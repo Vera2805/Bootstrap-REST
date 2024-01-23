@@ -7,11 +7,7 @@ import java.util.Set;
 public interface RoleDao {
     Set<Role> indexRoles();
 
-    Role getRoleById(Long id);
-
-    void addRole(Role role);
-
-    Set<Role> getRolesByIds(Set<Integer> roleIds);
+    Set<Role> getRolesByIds(Set<Long> roleIds);
 
     Role findByName(String roleName);
 
@@ -19,6 +15,9 @@ public interface RoleDao {
 
 
     void save(Role role);
-}
 
+    Role getAllRoleByNames();
+
+    Set<Role> findAll();
+}
 
