@@ -1,20 +1,14 @@
 package ru.kata.spring.boot_security.demo.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Service
 public class UserDaoImpl implements UserDao {
@@ -27,9 +21,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Set<User> getAllUsers() {
-        return new HashSet<>(entityManager.createQuery("select u from User u", User.class)
-                .getResultList());
+    public List<User> getAllUsers() {
+        return entityManager.createQuery("select u from User u", User.class)
+                .getResultList();
     }
 
     @Override
