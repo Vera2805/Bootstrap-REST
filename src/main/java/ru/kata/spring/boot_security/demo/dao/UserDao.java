@@ -2,16 +2,15 @@ package ru.kata.spring.boot_security.demo.dao;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UserDao {
 
     void addUser(User user);
 
-    Set<User> getAllUsers();
+    List<User> getAllUsers();
 
     void updateUser(User user);
 
